@@ -38,7 +38,7 @@ node {
         }
 			println rc	
         stage("SFDX Logout"){
-             rcl = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:logout --username ${HUB_ORG}"
+             rcl = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:logout --username ${HUB_ORG}"
         if (rcl != 0) { error 'SFDX Logout failed' } 
         printf rcl
 
