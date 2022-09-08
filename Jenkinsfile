@@ -38,14 +38,14 @@ node {
         }
 			println rc			  
         }
-        stage('Deploy') {
-        rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy --wait 10 --deploydir src -u ${HUB_ORG}"
-		if (rmsg != 0) {
-			error 'Salesforce deploy and test run failed.'
-		  }
-        printf rmsg
-
-        }
+        //stage('Deploy') {
+        //rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy --wait 10 --deploydir src -u ${HUB_ORG}"
+		//if (rmsg != 0) {
+		//	error 'Salesforce deploy and test run failed.'
+		//  }
+        //printf rmsg
+        //
+        //}
         stage("SFDX Logout"){
              rcl = sh returnStatus: true, script: "sfdx force:auth:logout -p --all"
         if (rcl != 0) { error 'SFDX Logout failed' } 
