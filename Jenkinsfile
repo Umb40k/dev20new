@@ -47,7 +47,7 @@ node {
         //
         //}
         stage("SFDX Logout"){
-             rcl = sh returnStatus: true, script: "sfdx force:auth:logout -p --all"
+             rcl = sh returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:logout -p --all"
         if (rcl != 0) { error 'SFDX Logout failed' } 
         printf rcl
 
