@@ -35,7 +35,7 @@ node {
         if (rc != 0) { error 'hub org authorization failed' 
         }else{
             stage('Deploy') {
-               rmsg = bat returnStdout: true, script: "\"${sfdx}\" force:source:deploy --sourcepath force-app -u ${SFDC_USERNAME}"
+               rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy --sourcepath force-app -u ${SFDC_USERNAME}"
 		    if (rc != 0) {
 			error 'Salesforce deploy and test run failed.'
 		    }
