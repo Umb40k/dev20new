@@ -33,25 +33,24 @@ node {
         stage('SFDX Login') {
         rc = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
         if (rc != 0) { error 'hub org authorization failed' 
-        }else{
-            stage('Deploy') {
-               rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
-		    if (rmsg != 0) {
-			error 'Salesforce deploy and test run failed.'
-		    }
-		}
+        }
             
         }
-        stage("SFDX Logout"){
-             rc = sh returnStatus: true, script: "sfdx force:auth:logout -p --all" if (rc != 0) { error 'SFDX Logout failed' } 
-             }
-
-			println rc
-
-			  
-            printf rmsg
-            println(rmsg)
+			println rc			  
         }
+        stage('Deploy') {
+        rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+		if (rmsg != 0) {
+			error 'Salesforce deploy and test run failed.'
+		  }
+        printf rmsg
+
+        }
+        stage("SFDX Logout"){
+             rcl = sh returnStatus: true, script: "sfdx force:auth:logout -p --all" if (rc != 0) { error 'SFDX Logout failed' } 
+        }
+        printf rcl
+
      }
     }
 }
