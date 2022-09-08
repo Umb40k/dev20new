@@ -37,12 +37,12 @@ node {
             
         }
 			println rc	
-        stage("SFDX Logout"){
-             rcl = sh returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:logout -p --all"
-        if (rcl != 0) { error 'SFDX Logout failed' } 
-        printf rcl
+        //stage("SFDX Logout"){
+        //     rcl = sh returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:logout -p --all"
+        //if (rcl != 0) { error 'SFDX Logout failed' } 
+        //printf rcl
 
-        }		  
+        //}		  
         }
         //stage('Deploy') {
         //rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy --wait 10 --deploydir src -u ${HUB_ORG}"
