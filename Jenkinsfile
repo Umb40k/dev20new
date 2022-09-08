@@ -25,20 +25,6 @@ node {
     //def sfdx = tool 'sfdxtool'
 
 
-
-        stage('Check branch name') { // Primer paso para compobar que estamos en la rama correcta
-        println env.BRANCH_NAME
-        if(env.BRANCH_NAME=="master"){// Este nombre es el que le demos al seleccionar el repositorio dentro del Pipeline
-            println('Script from master!')
-            println sfdx
-        }
-        else{
-            println sfdx
-            error 'Incorrect branch' 
-        }
-        checkout scm
-    }
-
     withEnv(["HOME=${env.WORKSPACE}"]) {
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'server_key_file')]) {        
