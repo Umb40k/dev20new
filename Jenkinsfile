@@ -38,9 +38,9 @@ node {
         checkout scm
     }
 
-    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'JWT_KEY_FILE')]) {        
+    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
         stage('Deployment') {
-        rc = rc = command '$toolbelt/sfdx auth:jwt:grant --instanceurl $SF_INSTANCE_URL --clientid $SF_CONSUMER_KEY --username $SF_USERNAME --jwtkeyfile $server_key_file --setdefaultdevhubusername --setalias Prod'
+                rc = bat returnStatus: true, script: "\"${sfdx}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
         if (rc != 0) { error 'hub org authorization failed' }
 
 			println rc
