@@ -6,7 +6,7 @@ node {
     def RUN_ARTIFACT_DIR="tests/${BUILD_NUMBER}"
     def SFDC_USERNAME
 
-def HUB_ORG=env.HUB_ORG_DH ?: "upiscopodev@dev.com"
+    def HUB_ORG=env.HUB_ORG_DH ?: "upiscopodev@dev.com"
     def SFDC_HOST = env.SFDC_HOST_DH ?: "https://login.salesforce.com"
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH ?:"93cb3a4f-47a9-47f5-b763-ae7cb11d641e"
     def JWT_KEY_FILE= "C:/Program Files/sfdx/bin/server.key"
@@ -41,9 +41,9 @@ def HUB_ORG=env.HUB_ORG_DH ?: "upiscopodev@dev.com"
 
     withEnv(["HOME=${env.WORKSPACE}"]) {
 
-    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
+    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'server_key_file')]) {        
         stage('Deployment') {
-                rc = bat returnStatus: true, script: "\"${sfdx}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SFDC_HOST} --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${server_key_file} --setdefaultdevhubusername --setalias HubOrg"
         if (rc != 0) { error 'hub org authorization failed' }
 
 			println rc
