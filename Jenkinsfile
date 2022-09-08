@@ -30,12 +30,12 @@ node {
     withEnv(["HOME=${env.WORKSPACE}"]) {
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
-        stage('Deployment') {
+        stage('Login') {
         rc = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
         if (rc != 0) { error 'hub org authorization failed' 
         }else{
-            stage('Deploy and Run Tests') {
-		    rc = command "${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR}  "
+            stage('Deploy') {
+		    rc = command "${toolbelt}/sfdx force:mdapi:deploy --wait 10"
 		    if (rc != 0) {
 			error 'Salesforce deploy and test run failed.'
 		    }
