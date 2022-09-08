@@ -6,8 +6,8 @@ node {
     def RUN_ARTIFACT_DIR="tests/${BUILD_NUMBER}"
     def SFDC_USERNAME
 
-    def HUB_ORG="${env.HUB_ORG_DH}"
-    def SFDC_HOST = env.SFDC_HOST_DH
+    def HUB_ORG=env.HUB_ORG_DH
+    def SFDC_HOST = env.SFDC_HOST_DH ?: "https://login.salesforce.com"
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
     def JWT_KEY_FILE= "server.key"
 
@@ -37,6 +37,8 @@ node {
         checkout scm
     }
 
+    withEnv(["HOME=${env.WORKSPACE}"]) {
+
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
         stage('Deployment') {
                 rc = bat returnStatus: true, script: "\"${sfdx}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
@@ -48,5 +50,6 @@ node {
             printf rmsg
             println(rmsg)
         }
+     }
     }
 }
