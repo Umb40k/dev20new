@@ -30,7 +30,7 @@ node {
     withEnv(["HOME=${env.WORKSPACE}"]) {
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
-        stage('Login') {
+        stage('SFDX Login') {
         rc = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
         if (rc != 0) { error 'hub org authorization failed' 
         }else{
@@ -42,6 +42,9 @@ node {
 		}
             
         }
+        stage("SFDX Logout"){
+             rc = sh returnStatus: true, script: "sfdx force:auth:logout -p --all" if (rc != 0) { error 'SFDX Logout failed' } 
+             }
 
 			println rc
 
