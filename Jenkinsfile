@@ -9,7 +9,7 @@ node {
     def HUB_ORG=env.HUB_ORG_DH ?: "upiscopodev@dev.com"
     def SFDC_HOST = env.SFDC_HOST_DH ?: "https://login.salesforce.com"
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH ?:"93cb3a4f-47a9-47f5-b763-ae7cb11d641e"
-    def JWT_KEY_FILE= "C:/Program Files/sfdx/bin/server.key"
+    def JWT_KEY_FILE= "server.key"
 
 
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH ?: "3MVG9t0sl2P.pByrVcWPZR2GQS5ug2AwIuHx_wOEyisZ_zdfHdP77glvprxNJ15L.Ku7Ivz9ML0aPUVBq2q9Z"
