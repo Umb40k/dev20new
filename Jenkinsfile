@@ -36,7 +36,7 @@ node {
         }else{
             stage('Deploy') {
                rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
-		    if (rc != 0) {
+		    if (rmsg != 0) {
 			error 'Salesforce deploy and test run failed.'
 		    }
 		}
