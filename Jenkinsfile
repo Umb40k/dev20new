@@ -36,7 +36,7 @@ node {
         checkout scm
     }
 
-    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
+    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'JWT_KEY_FILE')]) {        
         stage('Deployment') {
             if (isUnix()) {//Para sistemas Unix el comando varía un poco el formato
                 rc = sh returnStatus: true, script: "${sfdx} force:auth:logout --targetusername ${SFDC_USERNAME} -p" //Hacemos logout para evitar un error
@@ -44,7 +44,7 @@ node {
                 rc = sh returnStatus: true, script: "${sfdx} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }else{//ejecutamos lo mismo para sistemas Windows
                 rc = sh returnStatus: true, script:"\"${sfdx}\" force:auth:logout --targetusername ${SFDC_USERNAME} -p"
-                rc = bat returnStatus: true, script: "\"${sfdx}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+                rc = bat returnStatus: true, script: "\"${sfdx}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile \"${JWT_KEY_FILE}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }
             if (rc != 0) { error 'Org authorization has failed' }
 
