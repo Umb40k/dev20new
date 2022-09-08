@@ -21,7 +21,7 @@ node {
     println CONNECTED_APP_CONSUMER_KEY
     println JWT_KEY_FILE
     //printf $JWT_KEY_CRED_ID > server.key
-    //def toolbelt = tool 'toolbelt'
+    def toolbelt = tool 'toolbelt'
     //def sfdx = tool 'sfdxtool'
 
 
