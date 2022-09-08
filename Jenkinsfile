@@ -12,7 +12,7 @@ node {
     def JWT_KEY_FILE= "server.key"
 
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
-    
+
     println 'KEY IS' 
     println JWT_KEY_CRED_ID
     println HUB_ORG
@@ -38,16 +38,8 @@ node {
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'JWT_KEY_FILE')]) {        
         stage('Deployment') {
-            if (isUnix()) {//Para sistemas Unix el comando varía un poco el formato
-                rc = sh returnStatus: true, script: "${sfdx} force:auth:logout --targetusername ${SFDC_USERNAME} -p" //Hacemos logout para evitar un error
-				// Autorizamos la dev hub org
-                rc = sh returnStatus: true, script: "${sfdx} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-            }else{//ejecutamos lo mismo para sistemas Windows
-            rc = command '$toolbelt/sfdx auth:jwt:grant --instanceurl $SF_INSTANCE_URL --clientid $SF_CONSUMER_KEY --username $SF_USERNAME --jwtkeyfile $server_key_file --setdefaultdevhubusername --setalias Prod'
-                //rc = sh returnStatus: true, script:"\"${sfdx}\" force:auth:logout --targetusername ${SFDC_USERNAME} -p"
-                //rc = bat returnStatus: true, script: "\"${sfdx}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${SFDC_USERNAME} --jwtkeyfile \"${JWT_KEY_FILE}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-            }
-            if (rc != 0) { error 'Org authorization has failed' }
+        rc = sh returnStatus: true, script: "${toolbelt}/sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --JWT_KEY_FILE ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+        if (rc != 0) { error 'hub org authorization failed' }
 
 			println rc
 
