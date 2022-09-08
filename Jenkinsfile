@@ -29,7 +29,7 @@ node {
 						            println('XXXXXXX111222')
 
             }else{
-                 rc = bat returnStatus: true, script: "\"${toolbelt}\" sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${JWT_KEY_FILE}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+                 rc = bat returnStatus: true, script: "\"${toolbelt}\" sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${JWT_KEY_FILE} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 				 		            println('XXXXXXX111333')
 
             }
