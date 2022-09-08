@@ -39,7 +39,7 @@ node {
 			println rc			  
         }
         stage('Deploy') {
-        rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+        rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy -d manifest/package.xml -u ${HUB_ORG}"
 		if (rmsg != 0) {
 			error 'Salesforce deploy and test run failed.'
 		  }
