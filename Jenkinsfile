@@ -43,7 +43,7 @@ node {
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'server_key_file')]) {        
         stage('Deployment') {
-                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SFDC_HOST} --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${JWT_KEY_FILE} --setdefaultdevhubusername --setalias HubOrg"
+                rc = command \"${sfdxLoc}/sfdx\ force:auth:jwt:grant --instanceurl ${SFDC_HOST} --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${JWT_KEY_FILE} --setdefaultdevhubusername --setalias HubOrg"
         if (rc != 0) { error 'hub org authorization failed' }
 
 			println rc
