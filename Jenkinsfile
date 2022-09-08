@@ -31,18 +31,14 @@ node {
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {        
         stage('SFDX Login') {
+        rcl = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:logout --username ${HUB_ORG}"
         rc = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+        rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy -x manifest/package.xml -u ${HUB_ORG}  --wait 20"
         if (rc != 0) { error 'hub org authorization failed' 
         }
             
         }
-			println rc	
-        stage("SFDX Logout"){
-             rcl = bat returnStatus: true, script: "\"${toolbelt}\\sfdx\" force:auth:logout --username ${HUB_ORG}"
-        if (rcl != 0) { error 'SFDX Logout failed' } 
-        printf rcl
-
-        }		  
+			println rc		  
         }
         //stage('Deploy') {
         //rmsg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy --wait 10 --deploydir src -u ${HUB_ORG}"
