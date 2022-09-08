@@ -7,13 +7,13 @@
         <editHeading>true</editHeading>
         <label>Account Information</label>
         <layoutColumns>
+        <layoutItems>
+                <behavior>Required</behavior>
+                <field>Name</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
