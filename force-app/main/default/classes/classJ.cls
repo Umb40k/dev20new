@@ -1,5 +1,5 @@
 public with sharing class classJ {
-    public classJw() {
+    public classJ() {
 
         system.debug('TEST_JENKINS_DEPLOY');
 
