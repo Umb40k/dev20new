@@ -44,9 +44,7 @@ node {
 
         stage('Deploy') {
         msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG} -l RunLocalTests "
-		if (msg != 0) {
-			error 'Salesforce deploy and test run failed.'
-		  }
+
         printf msg
         
         }	  
