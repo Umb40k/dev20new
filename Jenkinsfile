@@ -41,12 +41,7 @@ node {
             
         }
 			println rc	
-            stage('Create Test Scratch Org') {
-                rc = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
-                if (rc != 0) {
-                    error 'Salesforce test scratch org creation failed.'
-                }
-            }
+
         stage('Deploy') {
         msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername ${HUB_ORG}"
 		if (msg != 0) {
