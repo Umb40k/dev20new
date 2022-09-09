@@ -1,7 +1,7 @@
 {
   "packageDirectories": [
     {
-      "path": "manifest/package.xml",
+      "path": "force-app",
       "default": true
     }
   ],
