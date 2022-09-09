@@ -26,7 +26,9 @@ node {
     //printf $JWT_KEY_CRED_ID > server.key
     def toolbelt = tool 'toolbelt'
     //def sfdx = tool 'sfdxtool'
-
+    stage('checkout source') {
+        checkout scm
+    }
 
     withEnv(["HOME=${env.WORKSPACE}"]) {
 
