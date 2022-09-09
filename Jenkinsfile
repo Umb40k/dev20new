@@ -43,20 +43,21 @@ node {
 			println rc	
         stage('Check only') {
         ck = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --checkonly --sourcepath force-app -u ${HUB_ORG} --testlevel RunLocalTests "
-		if (ck != 1) {
+		        printf ck
+        if (ck != 1) {
 			error 'Salesforce Checkonly failed.'
 		  }        
         }
-        printf ck
 
 
         stage('Deploy') {
         msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG}"
-		if (msg != 1) {
+		        printf msg
+
+        if (msg != 1) {
 			error 'Salesforce deploy failed.'
 		  }        
         }	
-        printf msg
   
         }
 
