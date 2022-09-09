@@ -43,14 +43,16 @@ node {
 			println rc	
         stage('Check only') {
         ck = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --checkonly --sourcepath force-app -u ${HUB_ORG} --testlevel RunLocalTests "
-      			println ck	
+      			println 'ck IS'
+                println ck	
 
         }
 
 
         stage('Deploy') {
         msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG}"
-             			println msg	
+             		    println 'msg IS'
+                    	println msg	
 
         }	
   
