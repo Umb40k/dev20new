@@ -43,7 +43,7 @@ node {
 			println rc	
 
         stage('Deploy') {
-        msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG} -w 180 -c --json"
+        msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath manifest/package.xml -u ${HUB_ORG} -w 180 -c --json"
 		if (msg != 0) {
 			error 'Salesforce deploy and test run failed.'
 		  }
