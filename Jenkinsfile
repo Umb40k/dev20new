@@ -43,10 +43,7 @@ node {
 			println rc	
 
         stage('Deploy') {
-        msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG} -l RunLocalTests "
-
-        printf msg
-        
+        msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG} -l RunLocalTests "        
         }	  
         }
 
