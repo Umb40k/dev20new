@@ -44,6 +44,7 @@ node {
         stage('Check only') {
         ck = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --checkonly --sourcepath force-app -u ${HUB_ORG} --testlevel RunLocalTests "
       			println 'ck IS'
+        if (ck == null) { error 'Check only failed'}
                 println ck	
 
         }
@@ -52,6 +53,7 @@ node {
         stage('Deploy') {
         msg = bat returnStdout: true, script: "\"${toolbelt}\\sfdx\" force:source:deploy --sourcepath force-app -u ${HUB_ORG}"
              		    println 'msg IS'
+        if (msg == null) { error ' Deploy failed'}
                     	println msg	
 
         }	
